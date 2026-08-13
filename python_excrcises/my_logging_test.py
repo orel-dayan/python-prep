@@ -49,21 +49,49 @@
 # logger.info("Application started")
 # logger.warning("Low memory")
 # logger.error("File not found")
-import logging
+# import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
-
-def fun(val):
-    if val < 0:
-        raise ValueError("Invalid value: Value cannot be negative.")
-    else:
-        logging.info("Operation performed successfully.")
+# logging.basicConfig(level=logging.DEBUG,
+#                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 
+# def fun(val):
+#     if val < 0:
+#         raise ValueError("Invalid value: Value cannot be negative.")
+#     else:
+#         logging.info("Operation performed successfully.")
+
+
+# try:
+#     v1 = int(input("Enter a value: "))
+#     fun(v1)
+# except ValueError as ve:
+#     logging.exception("Exception occurred: %s", str(ve))
+
+import logging, sys
+from pathlib import Path
+
+def setup_logging(log_file: Path, verbose: bool = False) -> None:
+    root = logging.getLogger()
+    root.setLevel(logging.DEBUG)
+    root.handlers.clear()                 # avoid duplicate handlers on re-run
+
+    fh = logging.FileHandler(log_file, encoding="utf-8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(logging.Formatter(
+        "%(asctime)s | %(levelname)-8s | %(name)s:%(lineno)d | %(message)s"))
+
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG if verbose else logging.INFO)
+    ch.setFormatter(logging.Formatter("%(levelname)-8s %(message)s"))
+
+    root.addHandler(fh)
+    root.addHandler(ch)
+
+# usage
+logger = logging.getLogger(__name__)
 try:
-    v1 = int(input("Enter a value: "))
-    fun(v1)
-except ValueError as ve:
-    logging.exception("Exception occurred: %s", str(ve))
+    setup_logging(Path("my_log.log"), verbose=True)
+    logger.info("Logging is set up.")
+except ConnectionError:
+    logger.exception("connect failed")    # full traceback goes to the file

@@ -1,6 +1,11 @@
 # vending_machine.py
 
 
+
+
+import code
+
+
 class OutOfStockError(Exception):
     """Raised when trying to purchase an item with 0 quantity."""
     pass
@@ -33,6 +38,9 @@ class VendingMachine:
             },
         }
         self.inserted_money = 0.0
+        
+        
+
 
     def insert_coin(self, amount: float) -> float:
         """Accepts positive coin/bill amounts and updates inserted_money."""
