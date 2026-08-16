@@ -1,6 +1,8 @@
 import pytest
 
-from vending_machine import VendingMachine, OutOfStockError, InsufficientFundsError
+from vending_machine import InsufficientFundsError, OutOfStockError, VendingMachine
+
+
 @pytest.fixture
 def vending_machine():
     return VendingMachine()
