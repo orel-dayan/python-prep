@@ -1,5 +1,4 @@
 import pytest
-
 from string_utils import count_words, is_palindrome, reverse_text, truncate
 
 

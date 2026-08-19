@@ -1,5 +1,6 @@
 import socket
 
+
 def run_fota_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -47,7 +48,7 @@ def run_fota_server():
                         conn.sendall(b"FLASH_SUCCESS: CRC_OK\n")
 
                 else:
-                    conn.sendall(f"ERR_UNKNOWN: {cmd}\n".encode('utf-8'))
+                    conn.sendall(f"ERR_UNKNOWN: {cmd}\n".encode())
 
             except Exception:
                 break

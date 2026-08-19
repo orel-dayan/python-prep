@@ -1,9 +1,44 @@
-# Python Automation Examples
+# Python Exercises
 
-Working code examples for automation engineering: system automation, network
-programming, log analysis, and security tooling.
+Two things live here:
 
-## Structure
+- `core/` — focused, single-topic language exercises (one concept, one small
+  runnable example per file).
+- `automation_examples/` — larger, realistic automation scripts grouped by
+  domain (network, security, system, utils).
+
+## core/
+
+| File | Topic |
+|---|---|
+| `generators.py` | generator functions vs. generator expressions |
+| `collections_and_itertools.py` | `Counter`, `itertools.groupby` |
+| `concurrency_basics.py` | threads vs. processes and the GIL |
+| `typing_basics.py` | modern type hint syntax, `Protocol` |
+| `context_managers.py` | `@contextmanager`, guaranteed cleanup |
+| `logging_basics.py` | multi-handler logging setup |
+| `requests_basics.py` | sync HTTP calls with `requests` |
+| `subprocess_basics.py` | portable `subprocess` calls (ping, service status) |
+| `serial_communication.py` | `pyserial` wrapped in a context manager |
+| `exceptions.py` | custom exception classes |
+| `oop_dunder_methods.py` | `__repr__` / `__eq__` |
+| `properties_and_validation.py` | `@property` setters |
+| `scope_and_closures.py` | LEGB rule, `global`/`nonlocal`, closures |
+| `mutable_defaults.py` | the mutable-default-argument pitfall |
+| `pydantic_basics.py` | runtime data validation with `pydantic.BaseModel` |
+| `solid/` | the five SOLID principles, one runnable file each — see `solid/README.md` |
+| `dataclasses_guide.py` | full `dataclasses` reference (fields, `kw_only`, `frozen`, ...) |
+| `dataclasses_practice.py` | shorter `dataclasses` practice |
+| `pathlib_guide.py` | full `pathlib` reference (the canonical one for this repo) |
+| `pathlib_practice.py` | shorter, hands-on `pathlib` practice |
+
+Each file is self-contained and runnable directly:
+
+```bash
+python core/generators.py
+```
+
+## automation_examples/
 
 ```
 automation_examples/
@@ -15,44 +50,45 @@ automation_examples/
 │   ├── log_analyzer.py      Web log parsing + attack detection
 │   └── integrity_monitor.py SHA-256 file integrity monitoring
 ├── system/
-│   └── health_monitor.py    Service/disk/memory/load checks via subprocess
+│   ├── health_monitor.py    Service/disk/memory/load checks via subprocess
+│   └── ctypes_bridge.py     Calling a compiled C++ shared library from Python
 └── utils/
     └── decorators.py        retry, rate_limit, timer, cached, log_exceptions
 ```
 
-## Requirements
+### Requirements
 
 ```bash
-pip install httpx pydantic
+pip install httpx pydantic requests pyserial
 ```
 
-## Running
+### Running
 
 ```bash
 # Threaded port scan
-python network/port_scanner.py scanme.nmap.org --common
+python automation_examples/network/port_scanner.py scanme.nmap.org --common
 
 # Async subnet sweep
-python network/host_monitor.py --subnet 192.168.1 --check-http
+python automation_examples/network/host_monitor.py --subnet 192.168.1 --check-http
 
 # Async API client
-python network/api_client.py fetch --ids 1 2 3 --save
+python automation_examples/network/api_client.py fetch --ids 1 2 3 --save
 
 # Log analysis
-python security/log_analyzer.py /var/log/nginx/access.log --threshold 10
+python automation_examples/security/log_analyzer.py /var/log/nginx/access.log --threshold 10
 
 # File integrity
-python security/integrity_monitor.py baseline /etc --output baseline.json
-python security/integrity_monitor.py check /etc --baseline baseline.json
+python automation_examples/security/integrity_monitor.py baseline /etc --output baseline.json
+python automation_examples/security/integrity_monitor.py check /etc --baseline baseline.json
 
 # System health (JSON output for piping into monitoring)
-python system/health_monitor.py --services nginx sshd --json
+python automation_examples/system/health_monitor.py --services nginx sshd --json
 
 # Decorator demos
-python utils/decorators.py
+python automation_examples/utils/decorators.py
 ```
 
-## Concepts demonstrated
+### Concepts demonstrated
 
 | Concept | Where |
 |---|---|
@@ -70,3 +106,4 @@ python utils/decorators.py
 | `logging` with multiple handlers | system/health_monitor.py |
 | Pydantic models + validation | network/api_client.py |
 | Dataclasses for structured results | most files |
+| `ctypes` calling a C++ shared library | system/ctypes_bridge.py |

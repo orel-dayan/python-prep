@@ -1,7 +1,8 @@
 """Custom Robot Framework library for communicating with an embedded board over serial."""
 
-import serial
 import time
+
+import serial
 
 
 class BoardLibrary:

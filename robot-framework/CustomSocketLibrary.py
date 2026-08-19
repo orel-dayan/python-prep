@@ -1,5 +1,6 @@
 import socket
 
+
 class CustomSocketLibrary:
     def __init__(self):
         self._sock = None

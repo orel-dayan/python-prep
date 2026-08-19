@@ -1,5 +1,6 @@
 import socket
 
+
 def run_mock_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -43,7 +44,7 @@ def run_mock_server():
                     pass
 
                 else:
-                    conn.sendall(f"ERR_UNKNOWN_CMD: {command}\n".encode('utf-8'))
+                    conn.sendall(f"ERR_UNKNOWN_CMD: {command}\n".encode())
 
             except Exception:
                 break

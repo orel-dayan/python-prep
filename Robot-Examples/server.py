@@ -1,5 +1,5 @@
-import socket
 import random
+import socket
 
 
 def handle_sys_status() -> bytes:
@@ -9,7 +9,7 @@ def handle_sys_status() -> bytes:
 def handle_temperature() -> bytes:
     # Simulate a temperature reading
     temp = round(random.uniform(35.0, 45.0), 1)
-    return f"TEMP={temp}\n".encode('utf-8')
+    return f"TEMP={temp}\n".encode()
 
 
 def handle_version() -> bytes:

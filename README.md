@@ -46,47 +46,32 @@ python -m pip install -r requirements.txt
 ```powershell
 deactivate
 ```
-צודקת — הראיתי את הטעות ולא את התיקון. הנה:
 
-```python
-import pytest
+## Repository Overview
 
-def test_invalid_config_raises():
-    # Only the raising line goes inside the with block
-    with pytest.raises(ConfigurationError, match="missing field: timeout"):
-        load_config("broken.yaml")
-    # Any further assertion goes AFTER the block
-```
+This repository is a collection of Python learning/practice material, small utilities, and
+test-automation exercises (pytest, Robot Framework). Top-level layout:
 
-ואם את רוצה לבדוק את החריגה עצמה לעומק, זה מה ש-`excinfo` נותן:
-
-```python
-def test_invalid_config_details():
-    with pytest.raises(ConfigurationError) as excinfo:
-        load_config("broken.yaml")
-
-    # These run because they are outside the with block
-    assert "timeout" in str(excinfo.value)
-    assert excinfo.value.field_name == "timeout"
-    assert isinstance(excinfo.value.__cause__, KeyError)   # checks 'raise ... from e'
-```
-
-**הכלל:** בתוך ה-`with` — רק השורה שאמורה לזרוק. כל אימות נוסף אחרי הבלוק, דרך `excinfo.value`.
-
-ולגבי ה-escaping ב-`match`, גם שם לא נתתי תיקון:
-
-```python
-# BAD - the parentheses and dot are regex syntax, not literal characters
-with pytest.raises(ValueError, match="invalid port (70000). must be 1-65535"):
-    ...
-
-# GOOD - escape the literal text
-import re
-with pytest.raises(ValueError, match=re.escape("invalid port (70000). must be 1-65535")):
-    ...
-
-# Or match a distinctive substring instead of the whole message
-with pytest.raises(ValueError, match="invalid port"):
-    ...
-```
-
+- `conftest.py`, `pytest.ini` — shared pytest configuration and fixtures for the whole repo
+  (kept at the root because `pytest.ini` uses `testpaths = .` to discover tests everywhere).
+- `vending_machine/` — a small vending machine simulation (`vending_machine.py`,
+  `vending_machine_v1.py`) with its pytest test suites.
+- `pytest_examples/` — standalone pytest teaching examples: fixtures, scopes, parametrize,
+  mocking, markers, etc.
+- `cli_tools/` — command-line utilities (`qa_tool.py`, `runner_cli.py`) plus `runTests.bat`
+  for repeatedly running the test suite on Windows.
+- `reports/` — generated test/run artifacts (`log.html`, `output.xml`, `results.json`).
+- `docs/` — extra reference notes (`python_automation_cyber.md`).
+- `misc/` — miscellaneous scratch files (`main.py`, `test.txt`).
+- `example-cli/` — an example CLI application with sample user JSON data and its own tests.
+- `Exrcise_string/` — string utility exercises with their own `pytest.ini` and tests.
+- `modern_pytest_course/` — a small `app/` package (cart, database, file_db, user, validation)
+  with a matching `tests/` suite, used as a modern pytest course example.
+- `networking/` — DHCP client/server experiments (`dhcp_packet.py`, `dhcp_server.py`, `client.py`).
+- `python_excrcises/` — Python exercises: `core/` for single-topic language exercises
+  (generators, dataclasses, pathlib, typing, concurrency, etc.) and `automation_examples/`
+  for realistic scripts grouped by domain (network, security, system, utils).
+- `Robot-Examples/`, `robot-framework/`, `RobotFramworkExersize/` — Robot Framework test suites
+  and supporting Python libraries/servers for socket- and board-based testing.
+- `test_types/` — examples of test doubles (fakes, mocks, stubs) with their own `tests/` suite.
+- `output/` — output/log directory used by some scripts or test runs.

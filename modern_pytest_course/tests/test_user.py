@@ -1,5 +1,4 @@
 import pytest
-
 from app.user import format_email
 
 
