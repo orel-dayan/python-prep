@@ -9,7 +9,6 @@ import asyncio
 from dataclasses import dataclass
 
 import httpx
-
 from api_models import Post, User
 
 BASE_URL = "https://jsonplaceholder.typicode.com"

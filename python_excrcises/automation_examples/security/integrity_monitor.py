@@ -15,8 +15,8 @@ import argparse
 import hashlib
 import json
 import stat
-from dataclasses import dataclass, asdict
-from datetime import datetime
+from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 
 CHUNK_SIZE = 65536  # 64KB - balances syscall overhead against memory use
@@ -114,12 +114,15 @@ def compare(
     current_paths = set(current)
 
     modified = [
-        p for p in baseline_paths & current_paths
+        p
+        for p in baseline_paths & current_paths
         if baseline[p].sha256 != current[p].sha256
     ]
     permission_changed = [
-        p for p in baseline_paths & current_paths
-        if baseline[p].sha256 == current[p].sha256 and baseline[p].mode != current[p].mode
+        p
+        for p in baseline_paths & current_paths
+        if baseline[p].sha256 == current[p].sha256
+        and baseline[p].mode != current[p].mode
     ]
 
     return IntegrityReport(
@@ -127,7 +130,7 @@ def compare(
         added=sorted(current_paths - baseline_paths),
         deleted=sorted(baseline_paths - current_paths),
         permission_changed=sorted(permission_changed),
-        checked_at=datetime.now().isoformat(),
+        checked_at=datetime.now(timezone.utc).isoformat(),
     )
 
 
@@ -187,7 +190,9 @@ def main() -> None:
     baseline_parser = subparsers.add_parser("baseline", help="Create a baseline")
     baseline_parser.add_argument("directory", type=Path)
     baseline_parser.add_argument("--output", type=Path, default=Path("baseline.json"))
-    baseline_parser.add_argument("--exclude", nargs="*", default=["__pycache__", ".git"])
+    baseline_parser.add_argument(
+        "--exclude", nargs="*", default=["__pycache__", ".git"]
+    )
     baseline_parser.set_defaults(func=cmd_baseline)
 
     check_parser = subparsers.add_parser("check", help="Check against a baseline")

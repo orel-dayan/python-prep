@@ -69,9 +69,13 @@ def scan_ports(
     open_results = []
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {
-            executor.submit(scan_port, host, port, timeout): port
-            for port in ports
+        # executor.submit(func, *args, **kwargs) schedules func to be called with the given arguments and returns a Future object representing the execution of the function
+        # . The futures dictionary maps each Future to its corresponding port number.
+        # futures = {
+        #     executor.submit(scan_port, host, port, timeout): port for port in ports
+        # }
+        futures ={
+            executor.submit(scan_port , host, port, timeout): port for port in ports
         }
         for future in concurrent.futures.as_completed(futures):
             result = future.result()
@@ -85,7 +89,7 @@ def resolve_host(host: str) -> str | None:
     """Resolve a hostname to an IP address. Returns None on failure."""
     try:
         return socket.gethostbyname(host)
-    except socket.gaierror:
+    except OSError:
         return None
 
 
@@ -105,7 +109,9 @@ def main() -> None:
         print(f"Could not resolve host: {args.host}")
         return
 
-    ports = sorted(COMMON_PORTS) if args.common else list(range(args.start, args.end + 1))
+    ports = (
+        sorted(COMMON_PORTS) if args.common else list(range(args.start, args.end + 1))
+    )
 
     print(f"Scanning {args.host} ({ip}) - {len(ports)} ports")
     results = scan_ports(ip, ports, max_workers=args.workers, timeout=args.timeout)
