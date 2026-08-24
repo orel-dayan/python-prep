@@ -17,6 +17,8 @@ Example run:
     --runslow is passed - add it to see "This is a slow test" print). With
     -s you'll see "[setup] starting test" / "[teardown] finished test"
     printed around every test that does run.
+    python -m pytest pytest_examples/topics/test_05_fixture_autouse_and_request.py -v -s
+    python -m pytest pytest_examples/topics/test_05_fixture_autouse_and_request.py -v -s --runslow
 """
 import pytest
 

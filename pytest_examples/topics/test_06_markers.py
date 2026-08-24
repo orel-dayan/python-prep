@@ -41,12 +41,12 @@ def test_heavy_computation():
 def test_future_feature():
     ...
 
-
+# Conditional skip: only run this test if Python version is 3.8 or higher
 @pytest.mark.skipif(sys.version_info < (3, 8), reason="requires Python 3.8+")
 def test_conditional_skip():
     assert add(1, 2) == 3
 
-
+# Expected failure: this test is known to fail, but we want to run it anyway
 @pytest.mark.xfail(reason="known bug - demonstrates a failing assertion")
 def test_known_bug():
     assert add(1, 1) == 1

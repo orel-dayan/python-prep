@@ -32,6 +32,8 @@ class CanTest(DeviceTest):
 
 
 if __name__ == "__main__":
+    # the new design is open for extension (new device types) but closed for modification (existing code is never touched).
+    # list of tests to run, each test is a new class that implements the DeviceTest interface
     tests: list[DeviceTest] = [SerialTest(), CanTest()]
     for test in tests:
         print(test.run())

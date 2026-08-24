@@ -22,6 +22,7 @@ Two things live here:
 | `serial_communication.py` | `pyserial` wrapped in a context manager |
 | `exceptions.py` | custom exception classes |
 | `oop_dunder_methods.py` | `__repr__` / `__eq__` |
+| `oop_abstract_classes.py` | OOP four pillars; abstract classes (`abc.ABC`, `@abstractmethod`) |
 | `properties_and_validation.py` | `@property` setters |
 | `scope_and_closures.py` | LEGB rule, `global`/`nonlocal`, closures |
 | `mutable_defaults.py` | the mutable-default-argument pitfall |
