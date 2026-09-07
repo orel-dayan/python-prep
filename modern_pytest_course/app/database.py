@@ -14,7 +14,6 @@ class FakeDatabase:
 
     def user_count(self):
         return len(self.users)
-    
+
     def get_user(self, user_id):
         return self.users.get(user_id)
- 

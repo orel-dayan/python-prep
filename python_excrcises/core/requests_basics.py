@@ -20,6 +20,10 @@ def post_json(path: str, payload: dict) -> dict:
     response.raise_for_status()
     return response.json()
 
+# all functions in this file are synchronous and blocking, so they should not be used in async code.
+# r= requests.get("https://httpbin.org/get")  # blocking call, will block the event loop if used in async code
+# r = requests.post("https://httpbin.org/post", json={"key": "value"})  # blocking call, will block the event loop if used in async code
+
 
 if __name__ == "__main__":
     try:

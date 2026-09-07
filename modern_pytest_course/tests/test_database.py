@@ -1,6 +1,9 @@
 import pytest
 from app.database import FakeDatabase
 
+# Apply database marker to all tests in this module
+pytestmark = pytest.mark.database
+
 
 @pytest.fixture(scope="module")
 def db():

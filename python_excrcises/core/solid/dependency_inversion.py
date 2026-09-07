@@ -9,7 +9,7 @@ from typing import Protocol
 
 class TestRunnerBad:
     def __init__(self):
-        import serial  # noqa: F401 - illustrative only, not actually run
+        import serial
 
         self.connection = serial.Serial("/dev/ttyUSB0")  # hardware, no way around it
 

@@ -9,8 +9,8 @@ Steps:
 """
 
 import ctypes
-import sys
 import os
+import sys
 
 
 def load_library():

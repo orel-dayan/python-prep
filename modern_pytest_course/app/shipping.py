@@ -1,4 +1,16 @@
+FREE_SHIPPING_THRESHOLD = 50
+STANDARD_SHIPPING_FEE = 5
+SHIPPING_DISCOUNT_THRESHOLD = 40
+
+
 def calculate_shipping(total):
-    if total >= 50:
-        return 0  # Free shipping for orders $50 or more
-    return 5  # Flat shipping rate for orders under $50
+    if total < 0:
+        raise ValueError("Total amount cannot be negative.")
+
+    if total >= FREE_SHIPPING_THRESHOLD:
+        return 0
+
+    elif total >= SHIPPING_DISCOUNT_THRESHOLD:
+        return 2  # discounted shipping fee for orders between $40 and $49.99
+
+    return STANDARD_SHIPPING_FEE

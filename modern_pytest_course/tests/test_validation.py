@@ -10,8 +10,8 @@ from app.validation import is_valid_email
         ("alice-example.com", False),
         ("alice@", False),
         ("", False),
-        ("ALICE@EXAMPLE.COM", True)
-    ]
+        ("ALICE@EXAMPLE.COM", True),
+    ],
 )
 def test_is_valid_email(email, expected):
     assert is_valid_email(email) == expected

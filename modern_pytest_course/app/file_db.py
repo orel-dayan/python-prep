@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 class FakeFileDatabase:
-    def __init__(self, file_path:Path):
+    def __init__(self, file_path: Path):
         print("Creating fake file database...")
         time.sleep(1)
 

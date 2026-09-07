@@ -10,11 +10,11 @@ def db():
     # create file in same folder as this test file
     file_path = Path(__file__).parent / f"{secrets.token_hex(4)}.json"
     db = FakeFileDatabase(file_path)
-    
-    yield db 
-    
+
+    yield db
+
     print("Cleaning up fake file database...")
-    
+
     if file_path.exists():
         file_path.unlink()
 
