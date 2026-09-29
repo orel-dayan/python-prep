@@ -19,7 +19,8 @@ def test_user_1_exists(db):
 
 
 def test_user_3_exists(db):
-    assert db.get_user(3) == "Charlie"
+    assert db.get_user(
+        3) == "Charlie"
 
 
 def test_unknown_user_returns_none(db):

@@ -1,4 +1,6 @@
+from unittest import result
 from unittest.mock import MagicMock, patch
+import pytest
 
 import app.user_service
 
@@ -85,3 +87,40 @@ def test_register_user_email_failure(monkeypatch):
     result = app.user_service.register_user("avia@example.com")
 
     assert result["status"] == "email_failed"
+
+
+def test_send_email_directly_monkeypatch(monkeypatch, capsys):
+    monkeypatch.setattr(app.user_service.time, "sleep", lambda seconds: None)
+
+    result = app.user_service.send_email("test@example.com", "Hello")
+
+    assert result is True
+    captured = capsys.readouterr()
+    assert "Email sent to test@example.com with subject 'Hello'" in captured.out
+
+
+def test_send_email_directly_patch(monkeypatch, capsys):
+    with patch("app.user_service.time.sleep", lambda seconds: None):
+        result = app.user_service.send_email("test@example.com", "Hello")
+
+    assert result is True
+    captured = capsys.readouterr()
+    assert "Email sent to test@example.com with subject 'Hello'" in captured.out
+
+
+def test_send_email_directly_mocker(mocker, capsys):
+    mocker.patch("app.user_service.time.sleep")
+
+    result = app.user_service.send_email("test@example.com", "Hello")
+
+    assert result is True
+    captured = capsys.readouterr()
+    assert "Email sent to test@example.com with subject 'Hello'" in captured.out
+    
+    
+@patch("app.user_service.time.sleep", lambda seconds: None)
+def test_register_user_with_patch_time_sleep(capsys):
+    result = app.user_service.send_email("test@example.com", "Hello")
+    assert result is True   
+    captured = capsys.readouterr()
+    assert "Email sent to test@example.com" in captured.out

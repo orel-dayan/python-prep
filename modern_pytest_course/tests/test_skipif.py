@@ -18,3 +18,10 @@ def test_windows_registry_access():
 )
 def test_404_is_not_found():
     assert get_status_message(404) == "Not Found"
+    
+def test_200_is_ok():
+    assert get_status_message(200) == "OK"
+    
+
+def test_default_is_unknown():
+    assert get_status_message(999) == "Unknown"
