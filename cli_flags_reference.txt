@@ -1,0 +1,55 @@
+# ===== ESSENTIAL PYTEST CLI FLAGS REFERENCE =====
+# Run with: pytest [flags] [test_file_or_dir]
+
+# --- Output & Debugging ---
+-v              # Verbose output
+--tb=short      # Short traceback
+--tb=long       # Full traceback
+--tb=line       # Single-line per failure
+--tb=no         # Suppress traceback
+--durations=5   # Show 5 slowest tests
+--setup-show    # Show fixture lifecycle
+
+# --- Test Selection & Filtering ---
+-k "expression" # Run tests matching expression
+-m MARKER       # Run tests with marker
+-x              # Exit on first failure
+--maxfail=N     # Stop after N failures
+
+# --- Re-running Failed Tests (Flaky Test Triage) ---
+--lf            # --last-failed
+--ff            # --failed-first
+--nf            # --new-first
+--sw            # --stepwise
+
+# --- Parallel Execution & Performance ---
+-n auto        # Run in parallel (auto CPU cores)
+-n 4           # Run with 4 workers
+--dist=loadscope # Distribute by class/module
+
+# --- Profiling & Coverage ---
+--cov=my_package
+--cov-report=term-missing
+--cov-report=html
+--cov-fail-under=80
+--profile-svg
+
+# --- Fixture Debugging ---
+--fixtures      # List all fixtures
+--fixtures-per-test # Show fixtures per test
+
+# --- Captured Output ---
+-s              # Show print statements
+--capture=tee   # Show and capture output
+
+# --- CI & Reporting ---
+--junitxml=report.xml
+--json-report
+
+# --- Real Examples ---
+pytest -v -k test_name --tb=short -x
+pytest --setup-show -k test_name
+pytest -x --tb=short --lf
+pytest --ff -x --tb=short
+pytest -n auto --cov=my_package --cov-fail-under=80 --junitxml=report.xml
+pytest -v -m "not integration" --tb=short

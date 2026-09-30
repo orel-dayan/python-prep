@@ -22,6 +22,9 @@ def test_404_is_not_found():
 def test_200_is_ok():
     assert get_status_message(200) == "OK"
     
+def test_418_is_teapot():
+    assert get_status_message(418) == "I'm a teapot"
+    
 
 def test_default_is_unknown():
     assert get_status_message(999) == "Unknown"

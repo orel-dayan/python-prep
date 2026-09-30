@@ -1,0 +1,8 @@
+username,password,expected_status
+alice,correct_pw,200
+alice,wrong_pw,401
+bob,secret,200
+,anything,400
+bob,,400
+unknown,whatever,401
+alice,CORRECT_PW,401
